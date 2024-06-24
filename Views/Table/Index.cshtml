@@ -1,0 +1,40 @@
+﻿@model List<Tables>
+
+@{ ViewBag.Title = "Tables"; }
+
+<h2>Tables</h2>
+
+<table class="table">
+    <tr>
+        <th>Table Number</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var table in Model)
+    {
+<tr>
+    <td>@table.Number</td>
+   
+    <td>@table.Status</td>
+     <td>
+        @if (table.Status == "Vacant")
+        {
+            <form method="post" action="@Url.Action("Edit", "Table")">
+                <input type="hidden" name="Id" value="@table.Id" />
+                <select name="status">
+                    <option value="Occupied">Occupied</option>
+                    <option value="Reserved">Reserved</option>
+                </select>
+                <input type="submit" value="Update" />
+            </form>
+        }
+        else if (@table.Status == "Reserved" || @table.Status == "Occupied")
+        {
+            <form method="post" action="/Tables/BookFood">
+                <input type="hidden" name="tableId" value="@table.Id" />
+                <input type="submit" value="Book Food" />
+            </form>
+        }
+    </td>
+</tr>}
+</table>

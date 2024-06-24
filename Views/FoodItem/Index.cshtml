@@ -1,0 +1,47 @@
+﻿@model List<FoodItem>
+
+@{ ViewBag.Title = "FoodItem"; }
+
+<h2>FoodItems</h2>
+
+<fooditemid class="fooditemid">
+    <tr>
+        <th>FoodItemid</th>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+
+    <foodname class="foodname">
+        <tr>
+            <th>FoodItemid</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    @foreach (var fooditem in Model)
+    {
+<tr>
+    <td>@fooditem.Number</td>
+   
+    <td>@fooditem.Price</td>
+     <td>
+        @if (fooditem.Price == "V")
+        {
+            <form method="post" action="@Url.Action("Edit", "Table")">
+                <input type="hidden" name="Id" value="@fooditem.Id" />
+                <select name="Price">
+                    <option value="Choose">Choose</option>
+                    <option value="Selected">Selecvted</option>
+                </select>
+                <input type="button" value="Book Food" />
+            </form>
+        }
+        else if (@fooditem.Status == "Choose" || @fooditem.Status == "Selected")
+        {
+            <form method="post" action="/FooodItems/BookFood">
+                <input type="hidden" name="fooditemId" value="@fooditem.Id" />
+                <input type="button" value="Place Order" />
+            </form>
+        }
+    </td>
+</tr>}
+</foodname>
